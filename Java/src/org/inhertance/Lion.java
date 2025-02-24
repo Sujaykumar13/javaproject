@@ -3,7 +3,8 @@ package org.inhertance;
 public class Lion extends Animal{
     public void sound()
     {
-        System.out.println("lion roar");
+        System.out.println("lion roa" +
+                "r");
     }
     public static void main(String[] args)
     {
