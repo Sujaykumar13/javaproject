@@ -15,6 +15,7 @@ public class Numbers {
             arrayList.add(30);
             arrayList.add(40);
             arrayList.add(50);
+            arrayList.add(50);
             arrayList.add(60);
             arrayList.add(70);
             arrayList.add(80);
