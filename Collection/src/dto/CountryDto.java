@@ -17,6 +17,38 @@ public class CountryDto {
         this.presidentName=presidentName;
     }
 
+    public String getCountryName() {
+        return countryName;
+    }
+
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
+    }
+
+    public int getCountryCode() {
+        return countryCode;
+    }
+
+    public void setCountryCode(int countryCode) {
+        this.countryCode = countryCode;
+    }
+
+    public long getPopulation() {
+        return population;
+    }
+
+    public void setPopulation(long population) {
+        this.population = population;
+    }
+
+    public String getPresidentName() {
+        return presidentName;
+    }
+
+    public void setPresidentName(String presidentName) {
+        this.presidentName = presidentName;
+    }
+
     @Override
     public String toString() {
         return "CountryDto{" +

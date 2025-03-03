@@ -4,7 +4,9 @@ import dto.CountryDto;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Iterator;
+import java.util.function.Predicate;
 
 public class CountryRunner {
 
@@ -465,5 +467,14 @@ public class CountryRunner {
         {
             System.out.println(array[i]);
         }
+        Predicate<CountryDto> predicate =(CountryDto value)-> value.getCountryCode() == 856;
+        System.out.println(countryDtos.size());
+        countryDtos.removeIf(predicate);
+        System.out.println(countryDtos.size());
+
+        Comparator<CountryDto> comparator=(CountryDto c,CountryDto d)->{ return (int) (c.getPopulation()&d.getPopulation());};
+        System.out.println(countryDtos.stream().max(comparator));
+        System.out.println(countryDtos.stream().min(comparator)); 
+        
     }
 }
