@@ -1,0 +1,42 @@
+package org.xworks.jdbc;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class Create1 {
+
+    public static void main(String[] args) {
+        System.out.println("hello world");
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            System.out.println("registering driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        String url = "jdbc:mysql://localhost:3306/mycricketteam";
+        String userName = "root";
+        String password = "root";
+        try {
+            Connection connection = DriverManager.getConnection(url, userName, password);
+            System.out.println("estalishing connnection from database");
+
+            Statement statement = connection.createStatement();
+            System.out.println("createing statement");
+            String sqlQuery1="insert into myplayerinfo values(3,'raina','batting','gujrat','1982-06-07',78,245)";
+            int result = statement.executeUpdate(sqlQuery1);
+            System.out.println(result);
+
+            String sqlQuery="insert into myplayerinfo values(18, 'viratkohli', 'batter','delhi','1988-11-06',119,9012)";
+            int result1 = statement.executeUpdate(sqlQuery);
+            System.out.println(result1);
+
+            System.out.println("excuting sql query");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}

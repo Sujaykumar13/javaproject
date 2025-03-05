@@ -19,7 +19,7 @@ public class ProductDto implements Serializable,Comparable<ProductDto> {
         this.brand = brand;
         this.cost = cost;
         this.discount = discount;
-    }
+    } 
 
 
     public String getProductId() {
