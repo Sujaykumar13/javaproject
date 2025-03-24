@@ -2,7 +2,7 @@ package com.xworks.dto;
 
 import java.io.Serializable;
 
-public class CricketOdiStatsDto implements Serializable {
+public class CricketOdiStatsDto implements Serializable,Comparable{
 
     private int odiRuns;
     private int noOfFifties;
@@ -49,5 +49,10 @@ public class CricketOdiStatsDto implements Serializable {
 
     public void setAverage(double average) {
         this.average = average;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return 0;
     }
 }

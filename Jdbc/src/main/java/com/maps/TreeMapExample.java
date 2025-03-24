@@ -12,6 +12,7 @@ public class TreeMapExample {
             map.put(1,"Rahul");
             map.put(18,"virat");
             map.put(45,"Rohit");
+            //we not able add null in treemap because it will throw null pointer exception
             map.put(77,"gill");
             map.put(7,"dhoni");
             map.put(44,"sehwag");

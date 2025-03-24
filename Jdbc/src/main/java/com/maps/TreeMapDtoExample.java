@@ -167,5 +167,9 @@ public class TreeMapDtoExample {
 
         }
     }
+    //when we add duplicate key than value will override
+    //hashmap will store based on buketindex which will generte using hashcode(objects.hashcode)&index(n-1)
+    // when bucketindex is same if key is same than value is override otherwise than store based on calling next in nodes by address pointing to next node it is called hash-collison
+    //from java 8 it will use balanced tree instead of linked list
 
 
