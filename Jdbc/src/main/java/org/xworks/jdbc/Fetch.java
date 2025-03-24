@@ -33,9 +33,9 @@ public class Fetch {
 
             ResultSet result2 = statement.executeQuery(sqlQuery1);
             System.out.println(result2);//it will give fully quaified path
-            //if(result2.next()) {
-              //  System.out.println(result2.getNString("playername"));
-           // }
+            if(result2.next()) {
+                System.out.println(result2.getString("count(*)"));
+           }
 
             String sqlQuery2="select * from myplayerinfo";
             ResultSet result3 = statement.executeQuery(sqlQuery2);
