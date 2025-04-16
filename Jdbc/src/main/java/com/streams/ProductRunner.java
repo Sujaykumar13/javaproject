@@ -1,8 +1,6 @@
 package com.streams;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ProductRunner {
@@ -68,6 +66,67 @@ public class ProductRunner {
             System.out.println(productDto.getProductName());
         }
 
+        System.out.println("grouping by category");
+        Map<String,List<ProductDto>> category = products.stream().collect(Collectors.groupingBy(ProductDto::getCategory));
+        Set<String> keys = category.keySet();
+
+        for (Object key : keys) {
+            System.out.println(key);
+            List<ProductDto> values = category.get(key);
+            for (ProductDto value : values) {
+                System.out.println("product category is "+key+" with product name "+ value.getProductName() );
+
+            }
+        }
+
+         Map<String,  Double> category1 = products.stream().collect(Collectors.groupingBy(ProductDto::getCategory,
+                Collectors.summingDouble(ProductDto::getPrice)));//method reffernence
+        //sum,avg,min.max,count
+        //foreach(System.out::println)
+        Double average = products.stream().collect(Collectors.averagingDouble(ProductDto::getPrice));
+        System.out.println("average of price is"+average);
+
+         Long count = products.stream().collect(Collectors.counting());
+        System.out.println("count of dto"+count);
+
+        Double sum = products.stream().collect(Collectors.summingDouble(ProductDto::getPrice));
+        System.out.println("sum of price is"+sum);
+
+        Optional<ProductDto> max = products.stream().collect(Collectors.maxBy(Comparator.comparing(ProductDto::getPrice)));
+        System.out.println("max of price is"+max);
+
+        Optional<ProductDto> min = products.stream().collect(Collectors.minBy(Comparator.comparing(ProductDto::getPrice)));
+        System.out.println("min of price is"+min.get());
+
+        System.out.println("printing all product in asc order of product name");
+        Comparator<ProductDto> productDtoComparator1=(a,b)->(a.getProductName().compareTo(b.getProductName()));
+        List<ProductDto> productsInAsc1 = products.stream().sorted(productDtoComparator).collect(Collectors.toList());
+        for (ProductDto productDto : productsInAsc1) {
+            System.out.println(productDto.getProductName());
+        }
+
+        System.out.println("printing all product in desc order of product name");
+        Comparator<ProductDto> productDtoComparator2=(a,b)->(b.getProductName().compareTo(a.getProductName()));
+        List<ProductDto> productsInDesc1 = products.stream().sorted(productDtoComparator).collect(Collectors.toList());
+        for (ProductDto productDto : productsInDesc1) {
+            System.out.println(productDto.getProductName());
+        }
+
+        System.out.println("sorting dto based on name in ascending order");
+        Comparator<ProductDto> productDtoNameComparator=
+                (c,d)-> c.getProductName().compareTo(d.getProductName());
+        product.
+                stream().
+                sorted(productDtoNameComparator).
+                forEach(c-> System.out.println(c.getProductName()));
+
+        System.out.println("sorting dto based on name in descending order");
+        Comparator<ProductDto> productDtoNameComparator1=
+                (c,d)-> d.getProductName().compareTo(c.getProductName());
+        product.
+                stream().
+                sorted(productDtoNameComparator1).
+                forEach(c-> System.out.println(c.getProductName()));
 
     }
 }
