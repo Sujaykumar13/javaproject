@@ -124,6 +124,7 @@ public class ControllerClass {
         }
         return ResponseEntity.ok("contact number accepted");
 
+
     }
 
     @PostMapping("sendOtp")
