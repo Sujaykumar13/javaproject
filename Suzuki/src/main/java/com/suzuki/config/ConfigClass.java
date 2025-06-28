@@ -25,6 +25,7 @@ public class ConfigClass {
     }
 
     @Bean
+    
     public LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean()
     {
         LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean=new LocalContainerEntityManagerFactoryBean();

@@ -585,4 +585,20 @@ public class AdminServiceImplimentation implements AdminService{
 
         return dtos;
     }
+
+    @Override
+    public boolean deleteBikeModel(Integer id, Integer bikeId) {
+        if(id!=0&& bikeId!=0)
+        {
+            boolean result = adminRepository.deleteBikeModel(id, bikeId);
+            if(result)
+            {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        return false;
+    }
 }

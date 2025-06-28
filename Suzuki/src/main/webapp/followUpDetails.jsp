@@ -143,6 +143,7 @@
                   <h5 class="mb-1">${userDto.firstName} ${userDto.lastName}</h5>
                   <h5 class="mb-1">${userDto.userEmailId}</h5>
                   <h5 class="mb-1">${userDto.contactNumber}</h5>
+
                 </div>
               </div>
 
@@ -155,6 +156,8 @@
                       <th>Date</th>
                       <th>Time</th>
                       <th>Comments</th>
+                      <th>Created By</th>
+                      <th>Details</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -164,44 +167,59 @@
                         <td class="py-3 px-4">${singleDto.date}</td>
                         <td class="py-3 px-4">${singleDto.time}</td>
                         <td class="py-3 px-4">${singleDto.comment}</td>
+                        <td class="py-3 px-4">${singleDto.createdBy}</td>
+                        <td class="py-3 px-4">
+                          <button type="button" class="btn btn-info btn-sm" data-toggle="popover"
+                            data-trigger="hover focus" data-container="body" data-placement="right"
+                            data-content="${singleDto.details}">
+                            View
+                          </button>
+
+                        </td>
+
                       </tr>
                     </c:forEach>
                   </tbody>
                 </table>
 
-                    <div class="d-flex justify-content-end align-items-center mt-4">
- 
-   <div class="text-muted small text-center flex-grow-1">
-    Page ${currentPage} of ${totalPages}
-  </div>
+                <div class="d-flex justify-content-end align-items-center mt-4">
 
-   <div class="text-muted small mr-4">
-    Total = <span>${totalfollowup}</span>
-  </div>
-  <nav aria-label="Follow-up navigation">
-    <ul class="pagination mb-0 justify-content-end">
-      <c:if test="${currentPage > 1}">
-        <li class="page-item">
-        <a class="page-link" href="followUpDetails?emailId=${email}&userEmailId=${userEmail}&page=${currentPage - 1}">Previous</a>
+                  <!-- Page info and Total follow-up -->
+                  <div class="text-muted small mr-4">
+                    Page ${currentPage} of ${totalPages}
+                  </div>
 
-        </li>
-      </c:if>
-      <!-- page numbers -->
-     <c:forEach begin="1" end="${totalPages}" var="i">
-       <li class="page-item ${i == currentPage ? 'active' : ''}">
-         <a class="page-link" href="followUpDetails?emailId=${email}&userEmailId=${userEmail}&page=${i}">${i}</a>
-       </li>
-     </c:forEach>
+                  <div class="text-muted small mr-4">
+                    Total = <span>${totalfollowup}</span>
+                  </div>
 
-      <c:if test="${currentPage < totalPages}">
-        <li class="page-item">
-          <a class="page-link" href="followUpDetails?emailId=${email}&userEmailId=${userEmail}&page=${currentPage + 1}">Next</a>
+                  <!-- Pagination -->
+                  <nav aria-label="Follow-up navigation">
+                    <ul class="pagination mb-0">
+                      <c:if test="${currentPage > 1}">
+                        <li class="page-item">
+                          <a class="page-link"
+                            href="followUpDetails?emailId=${email}&userEmailId=${userEmail}&page=${currentPage - 1}">Previous</a>
+                        </li>
+                      </c:if>
 
-        </li>
-      </c:if>
-    </ul>
-  </nav>
-</div>
+                      <c:forEach begin="1" end="${totalPages}" var="i">
+                        <li class="page-item ${i == currentPage ? 'active' : ''}">
+                          <a class="page-link"
+                            href="followUpDetails?emailId=${email}&userEmailId=${userEmail}&page=${i}">${i}</a>
+                        </li>
+                      </c:forEach>
+
+                      <c:if test="${currentPage < totalPages}">
+                        <li class="page-item">
+                          <a class="page-link"
+                            href="followUpDetails?emailId=${email}&userEmailId=${userEmail}&page=${currentPage + 1}">Next</a>
+                        </li>
+                      </c:if>
+                    </ul>
+                  </nav>
+                </div>
+
 
 
               </div>
@@ -223,8 +241,24 @@
           </div>
         </footer>
 
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> -->
+
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+  $(function () {
+    $('[data-toggle="popover"]').popover({
+      trigger: 'hover focus',
+      container: 'body'
+    });
+  });
+</script>
+
 
       </body>
 

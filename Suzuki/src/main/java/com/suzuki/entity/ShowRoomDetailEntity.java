@@ -4,6 +4,7 @@ package com.suzuki.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -42,4 +43,8 @@ public class ShowRoomDetailEntity {
     private long contactNumber;
 
     private String status;
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "bbike_list",referencedColumnName = "id")
+    private List<BikeDetailEntity> bikeDetails;
 }

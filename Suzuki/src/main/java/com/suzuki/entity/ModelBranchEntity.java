@@ -8,6 +8,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "branch_Model")
 @NamedQuery(name="findByBranchId",query="select e from ModelBranchEntity e where e.branchId=:bId and e.bikeId=:bike")
+@NamedQuery(name="deleteBikeModel" ,query="delete from ModelBranchEntity e where e.branchId=:bId and e.bikeId=:bike")
 @NamedQuery(name="findBikeIdByBranchId",query="select e from ModelBranchEntity e where e.branchId=:bId")
 public class ModelBranchEntity {
 

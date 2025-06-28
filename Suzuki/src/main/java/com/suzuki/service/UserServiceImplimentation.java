@@ -86,7 +86,10 @@ public class UserServiceImplimentation implements UserServiceInterface {
     @Override
     public boolean updateUserDetails(UserDetailsDto dto) {
         System.out.println(dto);
-        UserDetailsDto dtoFindByMobileNumber = findByContactNumber(dto.getContactNumber());
+        UserDetailsDto userDetails = findByEmailId(dto.getUserEmailId());
+        dto.setUserImageFileName(userDetails.getUserImageFileName());
+        dto.setUserImageContentType(userDetails.getUserImageContentType());
+
             UserEntity entity=new UserEntity();
         dto.setFirstName(toInitCase(dto.getFirstName()));
         dto.setCity(toInitCase(dto.getCity()));
@@ -117,6 +120,10 @@ public class UserServiceImplimentation implements UserServiceInterface {
 
         dto.setDate(LocalDate.now().toString());
         dto.setTime(LocalTime.now().toString());
+        if(dto.getCreatedBy()==null && dto.getDetails()==null) {
+            dto.setCreatedBy("admin:" + dto.getUserEmailId());
+            dto.setDetails("Na");
+        }
         FollowUpDetailsEntity entity=new FollowUpDetailsEntity();
         BeanUtils.copyProperties(dto,entity);
         boolean result = userRepositoryInterface.saveFollowUpDetails(entity);

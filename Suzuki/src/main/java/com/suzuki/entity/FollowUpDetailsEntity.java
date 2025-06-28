@@ -24,4 +24,8 @@ public class FollowUpDetailsEntity {
 
     @Column(name = "comments")
     private String comment;
+
+    private String createdBy;
+
+    private String details;
 }

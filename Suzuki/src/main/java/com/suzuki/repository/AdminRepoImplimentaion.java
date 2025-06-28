@@ -520,4 +520,35 @@ public class AdminRepoImplimentaion implements AdminRepository{
             entityManager.close();
         }
     }
+
+    @Override
+    public boolean deleteBikeModel(Integer id, Integer bikeId) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try{
+            EntityTransaction transaction = entityManager.getTransaction();
+            transaction.begin();
+            Query query = entityManager.createNamedQuery("deleteBikeModel");
+            query.setParameter("bId",id);
+            query.setParameter("bike",bikeId);
+            int result = query.executeUpdate();
+            transaction.commit();
+            System.out.println(result);
+            if(result==1)
+            {
+                return true;
+            }
+            else {
+                return false;
+            }
+
+
+        } catch (Exception e) {
+            log.info("exception occur in delete bike");
+            log.info(e.getMessage());
+            return false;
+        }
+        finally {
+            entityManager.close();
+        }
+    }
 }

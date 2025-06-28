@@ -1,6 +1,7 @@
 package com.suzuki.controller;
 
 import com.suzuki.dto.*;
+import com.suzuki.service.AdminService;
 import com.suzuki.service.UserServiceInterface;
 import com.suzuki.util.EmailSender;
 import lombok.extern.slf4j.Slf4j;
@@ -14,12 +15,15 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.mail.MessagingException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.*;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +40,9 @@ public class UserController {
     
     @Autowired
     UserServiceInterface userServiceInterface;
+
+    @Autowired
+    AdminService adminService;
 
     @RequestMapping("userRegister")
     public String getUserRegisterPage(@RequestParam String emailId, Model model)
@@ -242,7 +249,12 @@ public class UserController {
             System.out.println("controller=================="+userDetails);
             userServiceInterface.updateUserDetails(userDetails);
             userServiceInterface.saveLoginDetails(dto);
+            List<BikeDetailsDto> bikeDtos = adminService.fetchBikes();
+
+            model.addAttribute("dtos",bikeDtos);
             model.addAttribute("userEmail",dto.getUserEmailId());
+            List<ShowRoomDetailsDto> showroomsDtos=adminService.activeFetch();
+            model.addAttribute("sdtos",showroomsDtos);;
             model.addAttribute("userDto",userDetails);
             return "userHome";
         }
@@ -253,6 +265,12 @@ public class UserController {
                 model.addAttribute("userEmail", dto.getUserEmailId());
                 UserDetailsDto userDetails = userServiceInterface.findByEmailId(dto.getUserEmailId());
                 model.addAttribute("userDto",userDetails);
+                List<BikeDetailsDto> bikeDtos = adminService.fetchBikes();
+
+                model.addAttribute("dtos",bikeDtos);
+                model.addAttribute("userEmail",dto.getUserEmailId());
+                List<ShowRoomDetailsDto> showroomsDtos=adminService.activeFetch();
+                model.addAttribute("sdtos",showroomsDtos);
                 return "userHome";
             }
             else {
@@ -354,9 +372,14 @@ public class UserController {
     @RequestMapping("userBackPage")
     public String getUserBack(@RequestParam String userEmailId,Model model)
     {
-        model.addAttribute("userEmail",userEmailId);
         UserDetailsDto userDetails = userServiceInterface.findByEmailId(userEmailId);
         model.addAttribute("userDto",userDetails);
+        List<BikeDetailsDto> bikeDtos = adminService.fetchBikes();
+
+        model.addAttribute("dtos",bikeDtos);
+        model.addAttribute("userEmail",userEmailId);
+        List<ShowRoomDetailsDto> showroomsDtos=adminService.activeFetch();
+        model.addAttribute("sdtos",showroomsDtos);
         return "userHome";
     }
 
@@ -367,6 +390,12 @@ public class UserController {
         model.addAttribute("userEmail",dto.getUserEmailId());
         UserDetailsDto userDetails = userServiceInterface.findByEmailId(dto.getUserEmailId());
         model.addAttribute("userDto",userDetails);
+        List<BikeDetailsDto> bikeDtos = adminService.fetchBikes();
+
+        model.addAttribute("dtos",bikeDtos);
+
+        List<ShowRoomDetailsDto> showroomsDtos=adminService.activeFetch();
+        model.addAttribute("sdtos",showroomsDtos);
         return "userHome";
     }
 
@@ -385,6 +414,112 @@ public class UserController {
 
         }
     }
+
+    @RequestMapping("viewBikeUser")
+    public String getBikeUser(@RequestParam Integer id,@RequestParam String userEmailId,@RequestParam String branchName,Model model)
+    {
+        List<ModelBranchDto> bikeIds = adminService.findBikeIds(id);
+        log.info("bike ids============="+bikeIds);
+        List<BikeDetailsDto> bikeDetails = new ArrayList<>();
+        for (ModelBranchDto bike : bikeIds) {
+            BikeDetailsDto bikeDetail = adminService.bikeFetchById(bike.getBikeId());
+            if (bikeDetail != null) {
+                bikeDetails.add(bikeDetail);
+            }
+        }
+        log.info("bike Details=============="+bikeDetails);
+        model.addAttribute("bikeDtos", bikeDetails);
+        model.addAttribute("showRoomId",id);
+        model.addAttribute("userEmail",userEmailId);
+        model.addAttribute("branch",branchName);
+
+        return "viewBikeForUser";
+    }
+
+    @RequestMapping("viewSingleBikeforUser")
+    public String viewSingleBikesForUser(@RequestParam String userEmailId,@RequestParam String bikeName,@RequestParam String branchName,@RequestParam String id, Model model)
+    {
+        BikeDetailsDto dtoFindBikeName = adminService.findByBikeName(bikeName);
+
+        model.addAttribute("dto",dtoFindBikeName);
+        model.addAttribute("userEmail",userEmailId);
+        model.addAttribute("showRoomId",id);
+        model.addAttribute("branch",branchName);
+        return "viewSinglebikeForUser";
+    }
+
+    @RequestMapping("bookTestRide")
+    public String bookTestRide(@RequestParam String userEmailId, @RequestParam String bikeName, @RequestParam String branchName,
+                               @RequestParam Integer id, @RequestParam String date, HttpSession session, Model model) throws MessagingException {
+        FollowUpDetailsDto dto=new FollowUpDetailsDto();
+        dto.setUserEmailId(userEmailId);
+        dto.setComment("Please book a test ride for : "+bikeName);
+        dto.setCreatedBy("user: "+userEmailId);
+        dto.setDetails("Hii i need test ride from, BranchName:"+branchName+" in the Date:"+date);
+        userServiceInterface.saveFollowUpDetails(dto);
+
+        UserDetailsDto singleUserDto = userServiceInterface.findByEmailId(userEmailId);
+        singleUserDto.setComments(dto.getComment());
+        userServiceInterface.updateUserDetails(singleUserDto);
+
+        List<Map<String, String>> notifications = (List<Map<String, String>>) session.getAttribute("testRideNotifications");
+        if (notifications == null) {
+            notifications = new ArrayList<>();
+        }
+        Map<String, String> noteMap = new HashMap<>();
+        noteMap.put("email", userEmailId);
+        noteMap.put("name", singleUserDto.getFirstName());
+        notifications.add(noteMap);
+        session.setAttribute("testRideNotifications", notifications);
+
+
+
+        List<ModelBranchDto> bikeIds = adminService.findBikeIds(id);
+        log.info("bike ids============="+bikeIds);
+        List<BikeDetailsDto> bikeDetails = new ArrayList<>();
+        for (ModelBranchDto bike : bikeIds) {
+            BikeDetailsDto bikeDetail = adminService.bikeFetchById(bike.getBikeId());
+            if (bikeDetail != null) {
+                bikeDetails.add(bikeDetail);
+            }
+        }
+        log.info("bike Details=============="+bikeDetails);
+        model.addAttribute("bikeDtos", bikeDetails);
+
+        String gmailMsg = emailSender.testRideEmail(userEmailId, bikeName, singleUserDto.getFirstName(), branchName, date);
+
+        log.info("======================================================================"+gmailMsg);
+
+        model.addAttribute("showRoomId",id);
+        model.addAttribute("userEmail",userEmailId);
+        model.addAttribute("branch",branchName);
+        model.addAttribute("bookingMsg","your test ride booking for '"+bikeName+"' is completed");
+        return "viewBikeForUser";
+    }
+
+    @ResponseBody
+    @RequestMapping("ClearNotificationServlet")
+    public void clearNotification(@RequestParam("index") int index, HttpSession session) {
+        List<String> notifications = (List<String>) session.getAttribute("testRideNotifications");
+
+        if (notifications != null && index >= 0 && index < notifications.size()) {
+            notifications.remove(index);
+            session.setAttribute("testRideNotifications", notifications);
+        }
+    }
+
+
+    @RequestMapping("viewAllActiveShowRoomForUser")
+    public String fetchBikesForUser(@RequestParam String userEmailId,Model model)
+    {
+
+        model.addAttribute("userEmail",userEmailId);
+        List<ShowRoomDetailsDto> activeShowroomDetails = adminService.activeFetch();
+        model.addAttribute("showRoomDetails",activeShowroomDetails);
+        return "viewAllBikeForUser";
+    }
+
+
 
 
 }

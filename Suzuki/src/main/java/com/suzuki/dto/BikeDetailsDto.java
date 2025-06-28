@@ -1,7 +1,11 @@
 package com.suzuki.dto;
 
+import com.suzuki.entity.ShowRoomDetailEntity;
 import lombok.Data;
 
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -62,6 +66,7 @@ public class BikeDetailsDto {
     @NotEmpty(message = "fuelCapacity should not be empty")
     private String fuelCapacity;
 
-
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+   private ShowRoomDetailEntity showRoomDetailEntity;
 
 }

@@ -626,7 +626,7 @@ public class AdminController {
     }
 
     @RequestMapping("modelIdExist")
-    @ResponseBody//we can use restcotroller in controller instead of response body
+    @ResponseBody
     public ResponseEntity<String> modelIdExists(@RequestParam String branchName,@RequestParam String bikeName) {
         ShowRoomDetailsDto branchDto =adminService.findByBranch(branchName);
         BikeDetailsDto bikeDto = adminService.findByBikeName(bikeName);
@@ -637,6 +637,93 @@ public class AdminController {
             return ResponseEntity.ok("model is exist");
         }
         return ResponseEntity.ok("model is accepted");
+    }
+
+    @RequestMapping("deleteBikeModel")
+    public String deleteModel(@RequestParam String bikeName,@RequestParam Integer id,@RequestParam String emailId,Model model)
+    {
+        log.info("==================="+id+bikeName);
+        BikeDetailsDto bikeDetail = adminService.findByBikeName(bikeName);
+        Integer bikeId = bikeDetail.getId();
+       boolean result=adminService.deleteBikeModel(id,bikeId);
+       if(result) {
+           model.addAttribute("email", emailId);
+           model.addAttribute("msg","bike added to showroom");
+           Map<Object, Object> noOfShowRooms = adminService.noOfBranches();
+
+           Object[] valuesOfShowRooms = noOfShowRooms.values().toArray();
+
+           model.addAttribute("branch", valuesOfShowRooms[0]);
+           model.addAttribute("active", valuesOfShowRooms[1]);
+           model.addAttribute("inactive", valuesOfShowRooms[2]);
+           model.addAttribute("maintain", valuesOfShowRooms[3]);
+           model.addAttribute("models", valuesOfShowRooms[4]);
+
+           List<ShowRoomDetailsDto> showroomsDtos = adminService.activeFetch();
+           model.addAttribute("sdtos", showroomsDtos);
+           List<BikeDetailsDto> bikeDtos = adminService.fetchBikes();
+           model.addAttribute("bdtos", bikeDtos);
+
+           List<ShowRoomDetailsDto> listOfActiveShowroom = adminService.activeFetch();
+           List<ShowroomWithBikesDto> showroomWithBikesList = new ArrayList<>();
+
+           for (ShowRoomDetailsDto showroom : listOfActiveShowroom) {
+               List<ModelBranchDto> bikeIds = adminService.findBikeIds(showroom.getId());
+
+               List<String> bikeNames = new ArrayList<>();
+               for (ModelBranchDto bike : bikeIds) {
+                   BikeDetailsDto bikeDetails = adminService.bikeFetchById(bike.getBikeId());
+                   if (bikeDetails != null && bikeDetails.getBikeName() != null) {
+                       bikeNames.add(bikeDetails.getBikeName());
+                   }
+               }
+
+               ShowroomWithBikesDto dto = new ShowroomWithBikesDto(showroom, bikeNames);
+               showroomWithBikesList.add(dto);
+           }
+
+           model.addAttribute("showroomWithBikes", showroomWithBikesList);
+           return "home";
+       }
+       else {
+           model.addAttribute("email", emailId);
+           model.addAttribute("msg","bike added to showroom");
+           Map<Object, Object> noOfShowRooms = adminService.noOfBranches();
+
+           Object[] valuesOfShowRooms = noOfShowRooms.values().toArray();
+
+           model.addAttribute("branch", valuesOfShowRooms[0]);
+           model.addAttribute("active", valuesOfShowRooms[1]);
+           model.addAttribute("inactive", valuesOfShowRooms[2]);
+           model.addAttribute("maintain", valuesOfShowRooms[3]);
+           model.addAttribute("models", valuesOfShowRooms[4]);
+
+           List<ShowRoomDetailsDto> showroomsDtos = adminService.activeFetch();
+           model.addAttribute("sdtos", showroomsDtos);
+           List<BikeDetailsDto> bikeDtos = adminService.fetchBikes();
+           model.addAttribute("bdtos", bikeDtos);
+
+           List<ShowRoomDetailsDto> listOfActiveShowroom = adminService.activeFetch();
+           List<ShowroomWithBikesDto> showroomWithBikesList = new ArrayList<>();
+
+           for (ShowRoomDetailsDto showroom : listOfActiveShowroom) {
+               List<ModelBranchDto> bikeIds = adminService.findBikeIds(showroom.getId());
+
+               List<String> bikeNames = new ArrayList<>();
+               for (ModelBranchDto bike : bikeIds) {
+                   BikeDetailsDto bikeDetails = adminService.bikeFetchById(bike.getBikeId());
+                   if (bikeDetails != null && bikeDetails.getBikeName() != null) {
+                       bikeNames.add(bikeDetails.getBikeName());
+                   }
+               }
+
+               ShowroomWithBikesDto dto = new ShowroomWithBikesDto(showroom, bikeNames);
+               showroomWithBikesList.add(dto);
+           }
+
+           model.addAttribute("showroomWithBikes", showroomWithBikesList);
+           return "home";
+       }
     }
 
 }

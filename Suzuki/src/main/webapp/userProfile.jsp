@@ -135,33 +135,43 @@
         </div>
 
 
-        <div class="d-flex justify-content-end align-items-center mt-3">
-  <div class="text-muted small text-center flex-grow-1">
-     Page ${currentPage} of ${totalPages}
-   </div>
-          <div class="text-muted small">
-            Total User: ${totalUser}
-          </div>
-          <nav aria-label="Page navigation">
-            <ul class="pagination mb-0">
-              <c:if test="${currentPage > 1}">
-                <li class="page-item">
-                  <a class="page-link" href="userProfile?emailId=${email}&page=${currentPage - 1}">Previous</a>
-                </li>
-              </c:if>
-              <c:forEach begin="1" end="${totalPages}" var="i">
-                <li class="page-item ${i == currentPage ? 'active' : ''}">
-                  <a class="page-link" href="userProfile?emailId=${email}&page=${i}">${i}</a>
-                </li>
-              </c:forEach>
-              <c:if test="${currentPage < totalPages}">
-                <li class="page-item">
-                  <a class="page-link" href="userProfile?emailId=${email}&page=${currentPage + 1}">Next</a>
-                </li>
-              </c:if>
-            </ul>
-          </nav>
-        </div>
+        <div class="d-flex justify-content-end align-items-center mt-4">
+
+                          <!-- Page info and Total follow-up -->
+                          <div class="text-muted small mr-4">
+                            Page ${currentPage} of ${totalPages}
+                          </div>
+
+                          <div class="text-muted small mr-4">
+                            Total = <span>${totalUser}</span>
+                          </div>
+
+                          <!-- Pagination -->
+                          <nav aria-label="Follow-up navigation">
+                            <ul class="pagination mb-0">
+                              <c:if test="${currentPage > 1}">
+                                <li class="page-item">
+                                  <a class="page-link"
+                                    href="followUpDetails?emailId=${email}&userEmailId=${userEmail}&page=${currentPage - 1}">Previous</a>
+                                </li>
+                              </c:if>
+
+                              <c:forEach begin="1" end="${totalPages}" var="i">
+                                <li class="page-item ${i == currentPage ? 'active' : ''}">
+                                  <a class="page-link"
+                                    href="followUpDetails?emailId=${email}&userEmailId=${userEmail}&page=${i}">${i}</a>
+                                </li>
+                              </c:forEach>
+
+                              <c:if test="${currentPage < totalPages}">
+                                <li class="page-item">
+                                  <a class="page-link"
+                                    href="followUpDetails?emailId=${email}&userEmailId=${userEmail}&page=${currentPage + 1}">Next</a>
+                                </li>
+                              </c:if>
+                            </ul>
+                          </nav>
+                        </div>
 
       </div>
     </div>

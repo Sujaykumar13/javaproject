@@ -9,64 +9,99 @@
   <link rel="icon" href="https://wallpapers.com/images/hd/suzuki-logo3-d-rendering-wr9u1i83mycuikpy-2.jpg">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      padding-top: 70px;
-      background: linear-gradient(-45deg, #6e00ff, #ff6ec4, #40c9ff, #fcb045);
-      background-size: 400% 400%;
-      animation: gradientBG 15s ease infinite;
-      font-family: 'Segoe UI', sans-serif;
-      min-height: 100vh;
-    }
-    @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    header {
-      position: fixed;
-      top: 0; width: 100%; z-index: 1030;
-      background: rgba(0,0,0,0.7);
-    }
-    .glass-card {
-      background: rgba(255,255,255,0.15);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      border: 1px solid rgba(255,255,255,0.2);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-    }
-    form .form-control {
-      background-color: rgba(255,255,255,0.8);
-      border: none;
-      border-radius: 10px;
-      padding: 10px 15px;
-      transition: all 0.3s ease;
-    }
-    form .form-control:focus {
-      box-shadow: 0 0 8px #6e00ff;
-      outline: none;
-    }
-    form .btn {
-      border-radius: 25px;
-      padding: 10px 25px;
-      font-weight: bold;
-      transition: transform 0.2s ease;
-    }
-    form .btn:hover {
-      transform: scale(1.05);
-    }
-    footer {
-      background-color: rgba(0,0,0,0.8);
-      color: #ccc;
-      padding: 10px 0;
-    }
-  </style>
+ <style>
+   body {
+     background-color: #f0f2f5;
+     font-family: 'Segoe UI', sans-serif;
+     padding-top: 70px;
+     margin: 0;
+   }
+
+   header {
+     position: fixed;
+     top: 0; width: 100%; z-index: 1030;
+
+   }
+
+   .form-container {
+     max-width: 450px;
+     margin: auto;
+     background-color: #ffffff;
+     border-radius: 8px;
+     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+     padding: 20px;
+   }
+
+   .form-container h1 {
+     font-size: 24px;
+     font-weight: bold;
+     margin-bottom: 20px;
+     color: #333;
+   }
+
+   .form-label {
+     font-weight: 500;
+     margin-bottom: 5px;
+   }
+
+   .form-control {
+     padding: 8px 12px;
+     font-size: 14px;
+   }
+
+   .form-control:focus {
+     box-shadow: 0 0 0 2px rgba(66, 103, 178, 0.2);
+     border-color: #4267B2;
+   }
+
+   .btn-primary {
+     background-color: #4267B2;
+     border: none;
+   }
+
+   .btn-primary:hover {
+     background-color: #365899;
+   }
+
+   .btn-secondary {
+     background-color: #e4e6eb;
+     color: #050505;
+     border: none;
+   }
+
+   footer {
+     background-color: rgba(0,0,0,0.8);
+     color: #ccc;
+     text-align: center;
+     padding: 5px 0;
+     font-size: 14px;
+   }
+
+   small {
+     font-size: 12px;
+   }
+
+   .text-danger, .text-success {
+     font-size: 13px;
+   }
+
+   .header-buttons .btn {
+     background-color: #fff;
+     color: #4267B2;
+     border-color: #fff;
+     font-weight: 500;
+   }
+
+   .header-buttons .btn:hover {
+     background-color: #e7f0ff;
+     border-color: #e7f0ff;
+   }
+ </style>
+
 </head>
 <body class="d-flex flex-column min-vh-100">
 
-<header class="text-white">
+<header class="bg-dark text-white">
   <div class="d-flex justify-content-between align-items-center px-3 py-2">
     <img src="https://wallpapers.com/images/hd/suzuki-logo3-d-rendering-wr9u1i83mycuikpy-2.jpg"
          alt="Suzuki" width="50">
@@ -79,53 +114,49 @@
 </header>
 
 <main class="d-flex flex-fill justify-content-center align-items-center">
-  <div class="glass-card p-4 w-100" style="max-width:600px;">
+  <div class="form-container">
+
     <div class="text-center mb-2">
       <span id="Message"></span>
     </div>
     <div class="text-center text-success fst-italic mb-2">
       <p>${msg}</p>
     </div>
-    <div class="text-center text-danger fst-italic mb-4">
+    <div class="text-center text-danger fst-italic mb-3">
       <p>${error}</p>
     </div>
-    <h1 class="text-center mb-4 text-white">Showroom Details</h1>
 
-    <form action="showRoomData?emailId=${email}" method="post"
-          enctype="multipart/form-data" onsubmit="return validateForm()">
+    <h1 class="text-center">Add Showroom</h1>
 
-      <div class="mb-3">
-        <label for="bName" class="form-label text-white">Branch Name</label>
-        <input type="text" class="form-control" name="branchName" id="bName"
-               placeholder="Enter branch name" onchange="bNameValidation()" required>
+    <form action="showRoomData?emailId=${email}" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+
+      <div class="form-group">
+        <label for="bName" class="form-label">Branch Name</label>
+        <input type="text" class="form-control" name="branchName" id="bName" placeholder="Enter branch name" onchange="bNameValidation()" required>
         <small id="branchname" class="text-danger"></small>
       </div>
 
-      <div class="mb-3">
-        <label for="locationn" class="form-label text-white">Branch Location (Google Maps URL)</label>
-        <input type="text" class="form-control" name="location" id="locationn"
-               placeholder="https://www.google.com/maps/..." onchange="locationValidation()" required>
+      <div class="form-group">
+        <label for="locationn" class="form-label">Branch Location (Google Maps URL)</label>
+        <input type="text" class="form-control" name="location" id="locationn" placeholder="https://www.google.com/maps/..." onchange="locationValidation()" required>
         <small id="Locate" class="text-danger"></small>
       </div>
 
-      <div class="mb-3">
-        <label for="mName" class="form-label text-white">Manager Name</label>
-        <input type="text" class="form-control" name="branchManagerName" id="mName"
-               placeholder="Enter manager name" onchange="managerValidation()" required>
+      <div class="form-group">
+        <label for="mName" class="form-label">Manager Name</label>
+        <input type="text" class="form-control" name="branchManagerName" id="mName" placeholder="Enter manager name" onchange="managerValidation()" required>
         <small id="manager" class="text-danger"></small>
       </div>
 
-      <div class="mb-3">
-        <label for="contactNo" class="form-label text-white">Contact Number</label>
-        <input type="text" class="form-control" name="contactNumber" id="contactNo"
-               placeholder="10‑digit number" onchange="phonee()" required maxlength="10">
+      <div class="form-group">
+        <label for="contactNo" class="form-label">Contact Number</label>
+        <input type="text" class="form-control" name="contactNumber" id="contactNo" placeholder="10-digit number" onchange="phonee()" required maxlength="10">
         <small id="phone" class="text-danger"></small>
       </div>
 
-      <div class="mb-3">
-        <label for="statuserror" class="form-label text-white">Status</label>
-        <select name="status" id="statuserror" class="form-control"
-                onchange="statusValidation()" required>
+      <div class="form-group">
+        <label for="statuserror" class="form-label">Status</label>
+        <select name="status" id="statuserror" class="form-control" onchange="statusValidation()" required>
           <option value="">Select</option>
           <option value="Active">Active</option>
           <option value="InActive">InActive</option>
@@ -134,18 +165,16 @@
         <small id="statusss" class="text-danger"></small>
       </div>
 
-      <div class="mb-4">
-        <label for="image" class="form-label text-white">Image</label>
-        <input type="file" class="form-control" name="file" id="image"
-               onchange="validateImage()">
+      <div class="form-group">
+        <label for="image" class="form-label">Image</label>
+        <input type="file" class="form-control" name="file" id="image" onchange="validateImage()">
         <small id="imageError" class="text-danger"></small>
       </div>
 
-      <div class="text-center">
+      <div class="text-center mt-4">
         <button type="submit" id="button" class="btn btn-primary">Submit</button>
         <button type="reset" class="btn btn-secondary ml-2" onclick="resetForm()">Reset</button>
       </div>
-
     </form>
   </div>
 </main>

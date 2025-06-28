@@ -135,33 +135,32 @@
     </div>
   </section>
 
-  <!-- MODELS -->
   <section id="models" class="py-5">
     <div class="container">
       <h2 class="text-center mb-5">Top Suzuki Models</h2>
       <div class="row">
-        <div class="col-md-4 mb-4">
-          <div class="card">
-            <img class="card-img-top" src="https://c4.wallpaperflare.com/wallpaper/932/862/575/suzuki-hayabusa-gsx1300r-1280x960-motorcycles-suzuki-hd-art-wallpaper-preview.jpg" alt="Hayabusa">
-            <div class="card-body">
+        <div class="col-md-4 mb-4 d-flex">
+          <div class="card h-100 w-100">
+            <img class="card-img-top img-fluid" src="https://c4.wallpaperflare.com/wallpaper/932/862/575/suzuki-hayabusa-gsx1300r-1280x960-motorcycles-suzuki-hd-art-wallpaper-preview.jpg" alt="Hayabusa" style="height: 200px; object-fit: cover;">
+            <div class="card-body d-flex flex-column">
               <h5 class="card-title">Suzuki Hayabusa</h5>
               <p class="card-text">A record-breaking machine known for its aerodynamic design and raw speed.</p>
             </div>
           </div>
         </div>
-        <div class="col-md-4 mb-4">
-          <div class="card">
-            <img class="card-img-top" src="https://sahusuzuki.in/wp-content/uploads/2024/08/bule-white-suzuki-gixxer-sf-250-66ae197a86163.webp" alt="Gixxer 155">
-            <div class="card-body">
+        <div class="col-md-4 mb-4 d-flex">
+          <div class="card h-100 w-100">
+            <img class="card-img-top img-fluid" src="https://sahusuzuki.in/wp-content/uploads/2024/08/bule-white-suzuki-gixxer-sf-250-66ae197a86163.webp" alt="Gixxer 155" style="height: 200px; object-fit: cover;">
+            <div class="card-body d-flex flex-column">
               <h5 class="card-title">Suzuki Gixxer 155</h5>
               <p class="card-text">A streetfighter designed for city riders, combining style and fuel efficiency.</p>
             </div>
           </div>
         </div>
-        <div class="col-md-4 mb-4">
-          <div class="card">
-            <img class="card-img-top" src="https://i.pinimg.com/originals/b2/ae/c9/b2aec9e41259275850aa3f9ccc343ba4.jpg" alt="Intruder 150">
-            <div class="card-body">
+        <div class="col-md-4 mb-4 d-flex">
+          <div class="card h-100 w-100">
+            <img class="card-img-top img-fluid" src="https://i.pinimg.com/originals/b2/ae/c9/b2aec9e41259275850aa3f9ccc343ba4.jpg" alt="Intruder 150" style="height: 200px; object-fit: cover;">
+            <div class="card-body d-flex flex-column">
               <h5 class="card-title">Suzuki Intruder 150</h5>
               <p class="card-text">A modern cruiser built for long-distance comfort with an aggressive look.</p>
             </div>
@@ -170,6 +169,7 @@
       </div>
     </div>
   </section>
+
 
   <!-- CONTACT US -->
   <section id="contact" class="bg-gradient py-5">

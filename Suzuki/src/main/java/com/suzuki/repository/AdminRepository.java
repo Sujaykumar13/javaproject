@@ -53,4 +53,6 @@ public interface AdminRepository {
 
     List<ModelBranchEntity> findBikeIds(Integer id);
 
+    boolean deleteBikeModel(Integer id,Integer bikeId);
+
 }

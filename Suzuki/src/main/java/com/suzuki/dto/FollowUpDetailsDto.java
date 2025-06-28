@@ -15,4 +15,8 @@ public class FollowUpDetailsDto {
 
     private String comment;
 
+    private String createdBy;
+
+    private String details;
+
 }

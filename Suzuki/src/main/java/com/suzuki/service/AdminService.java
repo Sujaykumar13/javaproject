@@ -58,6 +58,8 @@ public interface AdminService {
 
     List<ModelBranchDto> findBikeIds(Integer id);
 
+    boolean deleteBikeModel(Integer id,Integer bikeId);
+
     }
 
 
