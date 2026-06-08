@@ -131,7 +131,6 @@
     </div>
   </div>
 
-  <!-- Scripts -->
   <script>
     const checkEmail = () => {
       const emailId = document.getElementById("email").value.trim();

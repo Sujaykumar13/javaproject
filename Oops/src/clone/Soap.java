@@ -24,5 +24,4 @@ public class Soap implements Cloneable {
         System.out.println(soap.price);
 
 }
-
 }

@@ -42,14 +42,11 @@ public class UserServiceImplimentation implements UserServiceInterface {
 
 
         UserDetailsDto dtoFindByMobileNumber = findByContactNumber(dto.getContactNumber());
-
-
         if(dtoFindByMobileNumber==null) {
             UserEntity entity=new UserEntity();
             dto.setFirstName(toInitCase(dto.getFirstName()));
-            dto.setCity(toInitCase(entity.getCity()));
+            dto.setCity(toInitCase(dto.getCity()));
             BeanUtils.copyProperties(dto,entity);
-
             userRepositoryInterface.saveUserDetails(entity);
             return true;
         }
@@ -312,9 +309,7 @@ public class UserServiceImplimentation implements UserServiceInterface {
         UserEntity entity=new UserEntity();
         if(file.isEmpty())
         {
-
             UserDetailsDto dtoFindByEmail = findByEmailId(dto.getUserEmailId());
-
             dto.setUserImageFileName(dtoFindByEmail.getUserImageFileName());
             dto.setUserImageContentType(dtoFindByEmail.getUserImageContentType());
         }

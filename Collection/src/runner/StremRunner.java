@@ -85,7 +85,5 @@ public class StremRunner {
                         getProuctName()).
                         forEach(c-> System.out.println(c));
 
-
-
     }
 }

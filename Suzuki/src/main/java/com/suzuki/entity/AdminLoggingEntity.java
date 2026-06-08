@@ -29,4 +29,5 @@ public class AdminLoggingEntity {
     private String logOutTime="0000000";
 
     private String otpTime;
+
 }

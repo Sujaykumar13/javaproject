@@ -29,6 +29,7 @@ public class Bag {
         bag.setBagWeight(30);
         try {
             bag.exceptionCallMethod();
+
         }catch(BagDamageException e)
         {
             e.printStackTrace();

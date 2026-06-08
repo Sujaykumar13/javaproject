@@ -63,6 +63,7 @@ public class RegistrationDto {
 
     private String logOutTime;
 
+
     private String fileName;
 
     private String contentType;

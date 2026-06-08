@@ -100,8 +100,6 @@
       <version>0.9.5.5</version>
     </dependency>
 
-
-
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>

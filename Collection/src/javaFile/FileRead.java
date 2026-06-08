@@ -1,7 +1,10 @@
 package javaFile;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.*;
 
+@Slf4j
 public class  FileRead {
     public static void main(String[] args) throws IOException {
         File f1 =new File("C:\\Users\\user\\Desktop\\Corejava\\Operators1.java");
@@ -14,11 +17,9 @@ public class  FileRead {
             String line=null;
             while((line=bufferedReader.readLine())!=null)
             {
-                System.out.println(line);//reading a file using read method
+                System.out.println(line);
+                //reading a file using read method
             }
-
         }
-
-
     }
 }

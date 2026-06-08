@@ -1,5 +1,7 @@
 package com.registerpage.repository;
 
+import com.registerpage.entity.DepartmentEntity;
+import com.registerpage.entity.EmployeEntity;
 import com.registerpage.entity.RegisterEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -47,6 +49,68 @@ public class RegisterRepoImpli implements RegisterRepoInterface{
             entityManager.close();
         }
     }
+
+    @Override
+    public void saveDept(DepartmentEntity entity) {
+        System.out.println(entity);
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        try{
+            EntityTransaction transaction = entityManager.getTransaction();
+            transaction.begin();
+            entityManager.persist(entity);
+            transaction.commit();
+        }
+        catch (Exception e) {
+            System.out.println("exception occurs");
+        }finally {
+            entityManager.close();
+        }
+
+    }
+
+    @Override
+    public void saveEmpoyee(EmployeEntity entity) {
+        System.out.println(entity);
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        try{
+            EntityTransaction transaction = entityManager.getTransaction();
+            transaction.begin();
+            entityManager.persist(entity);
+            transaction.commit();
+        }
+        catch (Exception e) {
+            System.out.println("exception occurs");
+        }finally {
+            entityManager.close();
+        }
+
+    }
+
+    @Override
+    public List<DepartmentEntity> fetchEmployeList(Integer id) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try{
+            EntityTransaction transaction = entityManager.getTransaction();
+            transaction.begin();
+            Query query = entityManager.createNamedQuery("fetchById");
+            query.setParameter("id",id);
+            List<DepartmentEntity> result = query.getResultList();
+            transaction.commit();
+
+            return result;
+
+        } catch (Exception e) {
+            System.out.println("exception occur");
+            System.out.println(e.getMessage());
+            return Collections.emptyList();
+        }
+        finally {
+            entityManager.close();
+        }
+    }
+
     @Override
     public void saveData(RegisterEntity entity) {
         System.out.println(entity);

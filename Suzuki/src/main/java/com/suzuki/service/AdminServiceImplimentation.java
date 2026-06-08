@@ -194,7 +194,6 @@ public class AdminServiceImplimentation implements AdminService{
         {
 
             ShowRoomDetailEntity dtoFindByBranch = adminRepository.findByBranch(dto.getBranchName());
-
             dto.setShowRoomImageFileName(dtoFindByBranch.getShowRoomImageFileName());
             dto.setShowRoomImageContentType(dtoFindByBranch.getShowRoomImageContentType());
         }

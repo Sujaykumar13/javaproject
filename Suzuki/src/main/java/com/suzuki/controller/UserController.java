@@ -35,7 +35,6 @@ public class UserController {
     private static String UPLOADED_FOLDER = "C://Photos//";
 
     @Autowired
-
     EmailSender emailSender;
     
     @Autowired
@@ -169,18 +168,12 @@ public class UserController {
     @PostMapping("addFollowUp")
     public String addFollowUpDetails(@RequestParam String emailId, FollowUpDetailsDto dto,Model model)
     {
-
-
         userServiceInterface.saveFollowUpDetails(dto);
-
         model.addAttribute("email",emailId);
         UserDetailsDto singleUserDto = userServiceInterface.findByEmailId(dto.getUserEmailId());
         singleUserDto.setComments(dto.getComment());
         userServiceInterface.updateUserDetails(singleUserDto);
-
         model.addAttribute("followUpMsg","Your Follow Up Added");
-
-
         model.addAttribute("userDto",singleUserDto);
         return "userSinglePage";
     }

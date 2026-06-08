@@ -214,14 +214,14 @@
                 }
             });
 
- window.addEventListener('DOMContentLoaded', () => {
+      window.addEventListener('DOMContentLoaded', () => {
         const toast = document.getElementById('followUpToast');
         if (toast) {
             setTimeout(() => {
                 $(toast).alert('close');
             }, 3000);
         }
-    });
+      });
 
     document.addEventListener("DOMContentLoaded", function () {
         const followUpForm = document.querySelector("#followUpModal form");

@@ -17,7 +17,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -35,7 +34,6 @@ public class AdminController {
     private static String UPLOADED_FOLDER = "C://Photos//";
 
     @Autowired
-
     EmailSender emailSender;
 
     @Autowired
@@ -103,6 +101,7 @@ public class AdminController {
 
             List<ShowRoomDetailsDto> listOfActiveShowroom = adminService.activeFetch();
             List<ShowroomWithBikesDto> showroomWithBikesList = new ArrayList<>();
+
 
             for (ShowRoomDetailsDto showroom : listOfActiveShowroom) {
                 List<ModelBranchDto> bikeIds = adminService.findBikeIds(showroom.getId());
@@ -205,7 +204,6 @@ public class AdminController {
 
     @GetMapping("image")
     public void getImage(@RequestParam String showRoomImageFileName, HttpServletResponse httpServletResponse){
-
 
         File file=new File(UPLOADED_FOLDER+showRoomImageFileName);
         try {
@@ -442,6 +440,7 @@ public class AdminController {
         File file1=new File(UPLOADED_FOLDER+frontImageFileName);
         try {
             FileInputStream fileInputStream = new FileInputStream(file1);
+
             InputStream inputStream=new BufferedInputStream(fileInputStream);
             ServletOutputStream servletInputStream = httpServletResponse.getOutputStream();
             IOUtils.copy(inputStream,servletInputStream);

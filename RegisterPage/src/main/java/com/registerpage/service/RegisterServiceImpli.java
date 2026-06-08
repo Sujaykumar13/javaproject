@@ -1,6 +1,10 @@
 package com.registerpage.service;
 
+import com.registerpage.dto.DepartmentDto;
+import com.registerpage.dto.EmployeeDto;
 import com.registerpage.dto.RegisterDto;
+import com.registerpage.entity.DepartmentEntity;
+import com.registerpage.entity.EmployeEntity;
 import com.registerpage.entity.RegisterEntity;
 import com.registerpage.repository.RegisterRepoInterface;
 import org.springframework.beans.BeanUtils;
@@ -88,5 +92,31 @@ public class RegisterServiceImpli implements RegisterServiceInterface {
         }
 
         return false;
+    }
+
+    @Override
+    public void saveDept(DepartmentDto dto) {
+        System.out.println(dto);
+        DepartmentEntity entity=new DepartmentEntity();
+        BeanUtils.copyProperties(dto,entity);
+        System.out.println(entity);
+        registerRepoInterface.saveDept(entity);
+
+    }
+
+    @Override
+    public void saveEmp(EmployeeDto dto) {
+        System.out.println(dto);
+        EmployeEntity entity=new EmployeEntity();
+        BeanUtils.copyProperties(dto,entity);
+        System.out.println(entity);
+        registerRepoInterface.saveEmpoyee(entity);
+
+    }
+
+    @Override
+    public void fetchEmployeList(Integer id) {
+        List<DepartmentEntity> result = registerRepoInterface.fetchEmployeList(id);
+        System.out.println(result);
     }
 }

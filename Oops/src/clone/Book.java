@@ -24,7 +24,7 @@ public class Book implements Cloneable{//clonable is marker interface because it
         System.out.println(book.noOfPages);
         System.out.println(book.author.name);
         System.out.println(book.author.place);
-        //cloning the object
+        //cloning the object//dowcastig
         Book book1= (Book) book.clone();
         //changing the values in Author
         book1.author.place="America";
@@ -42,8 +42,9 @@ public class Book implements Cloneable{//clonable is marker interface because it
 
     @Override
     protected Object clone() throws CloneNotSupportedException {
+        //override to avoid chage i origial oject
         Author a= new Author(this.author.name,this.author.place);
-        Book b=new Book(this.bookName,this.color,this.noOfPages,a);    
+        Book b=new Book(this.bookName,this.color,this.noOfPages,a);
         return b;
     }
 }

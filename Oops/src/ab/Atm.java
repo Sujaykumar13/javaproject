@@ -8,4 +8,4 @@ public interface Atm {
     public abstract String statement(int pin);
 // we can inherit interface to interface using extends
 }
- //we can create object us ing class.forname(classname)
+ //we can create object using class.forname(classname)

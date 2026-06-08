@@ -6,7 +6,11 @@ public class AdditionRunner {
 
     public static void main(String[] args)
     {
-         Addition add = (int a,int b)-> a+b;
+         Addition add = (int a,int b)-> {
+             int c=a + b;
+             return c;
+         };
+
         int result = add.sum(10,20);
         System.out.println(result);
     }
